@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.mapper.RelationMapper">
+	
+	<!-- 去除无效数据 -->
+	<delete id="delete">
+		delete from mashupapi where ApiID='-1'
+	</delete>
+	
+	<!-- 获取ApiID列表 -->
+	<select id="selectAllApiID" resultType="int">
+        select distinct ApiID from mashupapi order by ApiID
+    </select>
+	
+	<!-- 根据ApiID获取MashupID列表 -->
+	<select id="selectByApiID" parameterType="int" resultType="int">
+        select MashupID from mashupapi where ApiID = #{apiID}
+    </select>
+	
+	<!-- 根据MashupID获取ApiID列表 -->
+    <select id="selectByMashupID" parameterType="int" resultType="int">
+        select ApiID from mashupapi where MashupID = #{mashupID}
+    </select>
+    
+    <!-- 根据MashupID_A和MashupID_B获取MashupRelation列表 -->
+    <select id="selectByTwoMashupIDs" resultType="MashupRelation">
+        select MashupID_A mashupID_A, MashupID_B mashupID_B, Intersections intersections, Unions unions, Weight weight from mashup_api where MashupID_A = #{a} and MashupID_B = #{b}
+    </select>
+    
+    <!-- 插入MashupRelation -->
+    <insert id="insertMashupRelation" parameterType="MashupRelation">
+    	insert into mashup_api(MashupID_A,MashupID_B,Intersections,Unions,Weight) values (#{mashupID_A},#{mashupID_B},#{intersections},#{unions},#{weight})
+    </insert>
+    
+    <!-- 更新MashupRelation -->
+    <update id="updateMashupRelation" parameterType="MashupRelation">
+    	update mashup_api set Intersections = #{intersections}, Unions = #{union}, Weight = #{weight} where MashupID_A = #{mashupID_A} and MashupID_B = #{mashupID_B}
+    </update>
+    
+</mapper>
