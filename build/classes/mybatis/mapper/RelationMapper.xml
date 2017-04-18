@@ -9,9 +9,19 @@
 		delete from mashupapi where ApiID='-1'
 	</delete>
 	
-	<!-- 获取ApiID列表 -->
+	<!-- 获取完整ApiID列表 -->
 	<select id="selectAllApiID" resultType="int">
         select distinct ApiID from mashupapi order by ApiID
+    </select>
+    
+    <!-- 获取完整MashupID列表 -->
+	<select id="selectAllMashupID" resultType="int">
+        select distinct MashupID from mashupapi order by MashupID
+    </select>
+    
+    <!-- 获取完整MashupRelation列表 -->
+	<select id="selectAllMashupRelation" resultType="MashupRelation">
+        select MashupID_A mashupID_A, MashupID_B mashupID_B, Intersections intersections, Unions unions, Weight weight from mashup_api limit 0, 1000
     </select>
 	
 	<!-- 根据ApiID获取MashupID列表 -->
