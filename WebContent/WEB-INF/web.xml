@@ -30,7 +30,7 @@
   </servlet-mapping>
   
   <welcome-file-list>
-    <welcome-file>/WEB-INF/jsp/Index.html</welcome-file>
+    <welcome-file>/WEB-INF/jsp/Index.jsp</welcome-file>
   </welcome-file-list>
   
 </web-app>
