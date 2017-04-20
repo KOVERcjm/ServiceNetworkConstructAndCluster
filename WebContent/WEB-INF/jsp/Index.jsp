@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>项目概况 - Restful服务网络构建与聚类算法实现</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- Bootstrap Table CSS -->
+    <link rel="stylesheet" href="css/bootstrap-table.min.css">
   </head>
   
   <body>
@@ -24,8 +29,8 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="#">项目概況</a></li>
-            <li><a href="jsp/DataVisualization.jsp">实验数据</a></li>
-            <li><a href="#">网络构建</a></li>
+            <li><a href="navigate.do?page=DataVisualization">实验数据</a></li>
+            <li><a href="navigate.do?page=NetworkConstruct">网络构建</a></li>
             <li><a href="#">网络聚类</a></li>
             <li><a href="#">结果分析</a></li>
           </ul>
@@ -78,11 +83,9 @@
       </div>
     </div>
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<!-- jQuery JS -->
     <script src="js/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="all">
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Bootstrap JS -->
     <script src="js/bootstrap.js"></script>
   </body>
 </html>

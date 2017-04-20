@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>实验数据 - Restful服务网络构建与聚类算法实现</title>
+    <title>网络构建 - Restful服务网络构建与聚类算法实现</title>
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -29,8 +29,8 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="navigate.do?page=Index">项目概況</a></li>
-            <li class="active"><a href="#">实验数据</a></li>
-            <li><a href="navigate.do?page=NetworkConstruct">网络构建</a></li>
+            <li><a href="navigate.do?page=DataVisualization">实验数据</a></li>
+            <li class="active"><a href="#">网络构建</a></li>
             <li><a href="#">网络聚类</a></li>
             <li><a href="#">结果分析</a></li>
           </ul>
@@ -52,31 +52,13 @@
       <div class="row-fluid">
         <div class="col-md-2 sidebar">
           <ul class="nav nav-pills nav-stacked" data-spy="affix">
-            <li><a href="#">原始数据</a></li>
-            <li><a href="#">数据处理</a></li>
-            <li><a href="#">数据可视化</a></li>
+            <li><a href="#RelationalTable">Mashup - Api关系表</a></li>
+            <li><a href="#AdjacencyList">关系网络的邻接表表示</a></li>
+            <li><a href="#Matrix">关系网络的矩阵表示</a></li>
           </ul>
         </div>
-        <div class="col-md-10 panel">
-        	<h3 id="Overview" class="target">原始数据</h3>
-        	<p></p>
-			<p>
-			
-        	</p>
-        	<hr>
-        	<h3 id="DataSource" class="target">数据处理</h3>
-        	<p>
-        	
-        	</p>
-        	<hr>
-        	<h3 id="UsedTechnology" class="target">数据可视化</h3>
-        	<p>主要使用</p>
-        	<p>聚类算法：	</p>
-        </div>
-      </div>
-    </div>
-
-	<!-- jQuery JS -->
+        
+        	<!-- jQuery JS -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="js/bootstrap.js"></script>
@@ -84,5 +66,39 @@
     <script src="js/bootstrap-table.min.js"></script>
     <!-- Bootstrap Table Chinese Language Package JS -->
     <script src="js/bootstrap-table-zh-CN.min.js"></script>
+        
+        <div class="col-md-10 panel">
+        	<h3 id="RelationalTable" class="target">Mashup - Api关系表</h3>
+        	<p></p>
+        	<table	data-toggle="table"
+        			data-url="getJson.do?table=mashupapi">
+			    <thead>
+			        <tr>
+			            <th data-field="mashupID">Mashup ID</th>
+			            <th data-field="apiID">Api ID</th>
+			        </tr>
+			    </thead>
+			</table>
+        	<hr>
+        	<h3 id="AdjacencyList" class="target">关系网络的邻接表表示</h3>
+        	<table	data-toggle="table"
+        			data-url="getJson.do?table=mashupRelation"
+        			data-sidePagination="client"
+        			data-pageSize="10">
+			    <thead>
+			        <tr>
+			            <th data-field="source">Source</th>
+			            <th data-field="target">Target</th>
+			            <th data-field="weight">Weight</th>
+			        </tr>
+			    </thead>
+			</table>
+        	<hr>
+        	<h3 id="Matrix" class="target">关系网络的矩阵表示</h3>
+        	<p>
+			</p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
