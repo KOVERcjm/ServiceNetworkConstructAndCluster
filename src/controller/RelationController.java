@@ -85,7 +85,7 @@ public class RelationController
 			if (out != null)
 				out.close();  
 		}
-	}	
+	}
 	
 	@RequestMapping("/hello")
 	public ModelAndView handleRequest(HttpServletRequest arg0, HttpServletResponse arg1) throws Exception

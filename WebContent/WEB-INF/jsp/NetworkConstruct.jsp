@@ -58,14 +58,16 @@
           </ul>
         </div>
         
-        	<!-- jQuery JS -->
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="js/bootstrap.js"></script>
-    <!-- Bootstrap Table JS -->
-    <script src="js/bootstrap-table.min.js"></script>
-    <!-- Bootstrap Table Chinese Language Package JS -->
-    <script src="js/bootstrap-table-zh-CN.min.js"></script>
+		<!-- jQuery JS -->
+	    <script src="js/jquery-3.2.1.min.js"></script>
+	    <!-- Bootstrap JS -->
+	    <script src="js/bootstrap.js"></script>
+	    <!-- Bootstrap Table JS -->
+	    <script src="js/bootstrap-table.min.js"></script>
+	    <!-- Bootstrap Table Chinese Language Package JS -->
+	    <script src="js/bootstrap-table-zh-CN.min.js"></script>
+	    <!-- ECharts -->
+    	<script src="js/echarts.js"></script>
         
         <div class="col-md-10 panel">
         	<h3 id="RelationalTable" class="target">Mashup - Api关系表</h3>
@@ -95,8 +97,35 @@
 			</table>
         	<hr>
         	<h3 id="Matrix" class="target">关系网络的矩阵表示</h3>
-        	<p>
-			</p>
+        	<p> </p>
+        	<div id="main" style="width: 600px;height:400px;"></div>
+		    <script type="text/javascript">
+		        // 基于准备好的dom，初始化echarts实例
+		        var myChart = echarts.init(document.getElementById('main'));
+		
+		        // 指定图表的配置项和数据
+		        var option = {
+		            title: {
+		                text: 'ECharts 入门示例'
+		            },
+		            tooltip: {},
+		            legend: {
+		                data:['销量']
+		            },
+		            xAxis: {
+		                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+		            },
+		            yAxis: {},
+		            series: [{
+		                name: '销量',
+		                type: 'bar',
+		                data: [5, 20, 36, 10, 10, 20]
+		            }]
+		        };
+		
+		        // 使用刚指定的配置项和数据显示图表。
+		        myChart.setOption(option);
+		    </script>
         </div>
       </div>
     </div>

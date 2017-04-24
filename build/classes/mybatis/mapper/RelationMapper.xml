@@ -21,12 +21,12 @@
     
     <!-- 获取完整Relation列表 -->
 	<select id="selectAllRelation" resultType="Relation">
-        select MashupID mashupID, ApiID apiID from mashupapi limit 0,100
+        select MashupID mashupID, ApiID apiID from mashupapi limit 0,20
     </select>
     
     <!-- 获取完整MashupRelation列表 -->
 	<select id="selectAllMashupRelation" resultType="MashupRelation">
-        select MashupID_A mashupID_A, MashupID_B mashupID_B, Intersections intersections, Unions unions, Weight weight from mashup_api limit 0,100
+        select MashupID_A mashupID_A, MashupID_B mashupID_B, Intersections intersections, Unions unions, Weight weight from mashup_api limit 0,20
     </select>
 	
 	<!-- 根据ApiID获取MashupID列表 -->
