@@ -3,11 +3,13 @@ package controller;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,9 +85,64 @@ public class RelationController
 		finally
 		{  
 			if (out != null)
-				out.close();  
+				out.close();
 		}
 	}
+	
+	@RequestMapping(value="/processData",params="matrix=mashup")
+	public void processData(HttpServletRequest request)
+	{
+		// 去除ApiID为-1的无效数据
+		relationMapper.delete();
+		
+		List<Integer> allApiIDs = relationMapper.selectAllApiID();
+		List<Integer> allMashupIDs = relationMapper.selectAllMashupID();
+		List<Relation> singleRelations = new ArrayList<Relation>();
+		
+		int[][] mashupMatrix = new int[5723][5723];
+		List<MashupAdjacencyList> mashupAdjacencyList = new ArrayList<MashupAdjacencyList>();
+		
+		for(int apiID : allApiIDs)
+		{
+			List<Integer> mashupIDs = new ArrayList<Integer>(new HashSet<Integer>(relationMapper.selectByApiID(apiID)));
+			mashupIDs.sort(null);
+			
+			if (1 < mashupIDs.size())
+			{
+				System.out.println(mashupIDs.toString());
+				
+				for(int i = 0; i < mashupIDs.size(); i++)
+					for(int j = i + 1; j < mashupIDs.size(); j++)
+					{
+						mashupMatrix[allMashupIDs.indexOf(mashupIDs.get(i))][allMashupIDs.indexOf(mashupIDs.get(j))] = 1;	// TODO weight
+						
+						// Adjacency List
+					}
+			}
+			else
+				singleRelations.add(new Relation(apiID, mashupIDs.indexOf(0)));
+		}
+		
+		try
+		{
+			FileWriter fileWriter = new FileWriter(request.getServletContext().getRealPath("/json/MashupMatrix.json"), true);
+			
+			for (int i = 0; i < 5723; i++)
+			{
+				for (int j = 0; j < 5723; j++)
+					fileWriter.write(mashupMatrix[i][j] + ",");
+				fileWriter.write("\r\n");
+			}
+			
+			fileWriter.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	@RequestMapping("/hello")
 	public ModelAndView handleRequest(HttpServletRequest arg0, HttpServletResponse arg1) throws Exception
