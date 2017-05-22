@@ -6,7 +6,7 @@ public class MashupRelation
 	private int mashupID_B;
 	private String intersections;
 	private String unions;
-	private int weight;
+	private double weight;
 	
 	public int getMashupID_A()
 	{
@@ -40,11 +40,11 @@ public class MashupRelation
 	{
 		this.unions = union;
 	}
-	public int getWeight()
+	public double getWeight()
 	{
 		return weight;
 	}
-	public void setWeight(int weight)
+	public void setWeight(double weight)
 	{
 		this.weight = weight;
 	}
@@ -52,7 +52,7 @@ public class MashupRelation
 	{
 		super();
 	}
-	public MashupRelation(int mashupID_A, int mashupID_B, String intersection, String union, int weight)
+	public MashupRelation(int mashupID_A, int mashupID_B, String intersection, String union, double weight)
 	{
 		super();
 		this.mashupID_A = mashupID_A;

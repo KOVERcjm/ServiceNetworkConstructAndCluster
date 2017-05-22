@@ -14,6 +14,11 @@
         select distinct ApiID from mashupapi order by ApiID
     </select>
     
+    <!-- 获取MashupID数量 -->
+	<select id="countMashups" resultType="int">
+        select count(distinct MashupID) from mashupapi
+    </select>
+    
     <!-- 获取完整MashupID列表 -->
 	<select id="selectAllMashupID" resultType="int">
         select distinct MashupID from mashupapi order by MashupID
@@ -25,8 +30,8 @@
     </select>
     
     <!-- 获取完整MashupRelation列表 -->
-	<select id="selectAllMashupRelation" resultType="MashupRelation">
-        select MashupID_A mashupID_A, MashupID_B mashupID_B, Intersections intersections, Unions unions, Weight weight from mashup_api limit 0,20
+	<select id="selectMashupRelations" resultType="MashupRelation">
+        select MashupID_A mashupID_A, MashupID_B mashupID_B, Intersections intersections, Unions unions, Weight weight from mashupRelation limit #{start}, 1000
     </select>
 	
 	<!-- 根据ApiID获取MashupID列表 -->
@@ -46,7 +51,7 @@
     
     <!-- 插入MashupRelation -->
     <insert id="insertMashupRelation" parameterType="MashupRelation">
-    	insert into mashup_api(MashupID_A,MashupID_B,Intersections,Unions,Weight) values (#{mashupID_A},#{mashupID_B},#{intersections},#{unions},#{weight})
+    	insert into mashupRelation(MashupID_A,MashupID_B,Intersections,Unions,Weight) values (#{mashupID_A},#{mashupID_B},#{intersections},#{unions},#{weight})
     </insert>
     
     <!-- 更新MashupRelation -->

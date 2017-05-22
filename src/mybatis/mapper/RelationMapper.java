@@ -11,9 +11,10 @@ public interface RelationMapper
 {
 	boolean delete();
 	List<Integer> selectAllApiID();
+	int countMashups();
 	List<Integer> selectAllMashupID();
 	List<Relation> selectAllRelation();
-	List<MashupRelation> selectAllMashupRelation();
+	List<MashupRelation> selectMashupRelations(int start);
 	List<Integer> selectByApiID(int apiID);
 	List<Integer> selectByMashupID(int mashupID);
 	MashupRelation selectByTwoMashupIDs(@Param("a")int mashupID_A, @Param("b")int mashupID_B);

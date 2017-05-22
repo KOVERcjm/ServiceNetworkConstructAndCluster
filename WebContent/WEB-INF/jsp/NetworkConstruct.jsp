@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>网络构建 - Restful服务网络构建与聚类算法实现</title>
+    <title>服务复杂网络构建 - Restful服务网络构建与聚类算法实现</title>
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -29,10 +29,10 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="navigate.do?page=Index">项目概況</a></li>
-            <li><a href="navigate.do?page=DataVisualization">实验数据</a></li>
-            <li class="active"><a href="#">网络构建</a></li>
-            <li><a href="#">网络聚类</a></li>
-            <li><a href="#">结果分析</a></li>
+            <li><a href="navigate.do?page=DataVisualization">服务数据集</a></li>
+            <li class="active"><a href="#">服务复杂网络构建</a></li>
+            <li><a href="#">服务聚类</a></li>
+            <li><a href="#">实验结果</a></li>
           </ul>
         </div>
       </div>
@@ -52,9 +52,9 @@
       <div class="row-fluid">
         <div class="col-md-2 sidebar">
           <ul class="nav nav-pills nav-stacked" data-spy="affix">
-            <li><a href="#RelationalTable">Mashup - Api关系表</a></li>
+            <li><a href="#RelationalTable">Mashup - Api对应关系</a></li>
             <li><a href="#AdjacencyList">关系网络的邻接表表示</a></li>
-            <li><a href="#Matrix">关系网络的矩阵表示</a></li>
+            <li><a href="#Matrix">服务复杂网络可视化</a></li>
           </ul>
         </div>
         

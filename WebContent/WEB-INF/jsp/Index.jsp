@@ -29,10 +29,10 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="#">项目概況</a></li>
-            <li><a href="navigate.do?page=DataVisualization">实验数据</a></li>
-            <li><a href="navigate.do?page=NetworkConstruct">网络构建</a></li>
-            <li><a href="#">网络聚类</a></li>
-            <li><a href="#">结果分析</a></li>
+            <li><a href="navigate.do?page=DataVisualization">服务数据集</a></li>
+            <li><a href="navigate.do?page=NetworkConstruct">服务复杂网络构建</a></li>
+            <li><a href="#">服务聚类</a></li>
+            <li><a href="#">实验结果</a></li>
           </ul>
         </div>
       </div>

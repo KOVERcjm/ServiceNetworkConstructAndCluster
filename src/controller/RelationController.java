@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,47 +90,40 @@ public class RelationController
 		}
 	}
 	
-	@RequestMapping(value="/processData",params="matrix=mashup")
+	@RequestMapping(value="/processData")
 	public void processData(HttpServletRequest request)
 	{
-		// 去除ApiID为-1的无效数据
-		relationMapper.delete();
-		
-		List<Integer> allApiIDs = relationMapper.selectAllApiID();
+		int mashupNumbers = relationMapper.countMashups();
 		List<Integer> allMashupIDs = relationMapper.selectAllMashupID();
-		List<Relation> singleRelations = new ArrayList<Relation>();
 		
-		int[][] mashupMatrix = new int[5723][5723];
-		List<MashupAdjacencyList> mashupAdjacencyList = new ArrayList<MashupAdjacencyList>();
+		double[][] mashupMatrix = new double[mashupNumbers][mashupNumbers];
 		
-		for(int apiID : allApiIDs)
+		for (int i = 0; i < mashupNumbers; i++)
+			for (int j = 0; j < mashupNumbers; j++)
+				mashupMatrix[i][j] = 0;
+		
+		for (int i = 0; i < 5583; i++)
 		{
-			List<Integer> mashupIDs = new ArrayList<Integer>(new HashSet<Integer>(relationMapper.selectByApiID(apiID)));
-			mashupIDs.sort(null);
+			List<MashupRelation> mashupRelations = relationMapper.selectMashupRelations(i * 1000);
 			
-			if (1 < mashupIDs.size())
+			for (MashupRelation mashupRelation : mashupRelations)
 			{
-				System.out.println(mashupIDs.toString());
-				
-				for(int i = 0; i < mashupIDs.size(); i++)
-					for(int j = i + 1; j < mashupIDs.size(); j++)
-					{
-						mashupMatrix[allMashupIDs.indexOf(mashupIDs.get(i))][allMashupIDs.indexOf(mashupIDs.get(j))] = 1;	// TODO weight
-						
-						// Adjacency List
-					}
+				int mashupID_A = allMashupIDs.indexOf(mashupRelation.getMashupID_A());
+				int mashupID_B = allMashupIDs.indexOf(mashupRelation.getMashupID_B());
+				double weight = mashupRelation.getWeight();
+				System.out.println(mashupID_A + " " + mashupID_B + " " + weight);
+				mashupMatrix[mashupID_A][mashupID_B] = weight;
+				mashupMatrix[mashupID_B][mashupID_A] = weight;
 			}
-			else
-				singleRelations.add(new Relation(apiID, mashupIDs.indexOf(0)));
 		}
-		
+		System.out.println("end.");
 		try
 		{
 			FileWriter fileWriter = new FileWriter(request.getServletContext().getRealPath("/json/MashupMatrix.json"), true);
 			
-			for (int i = 0; i < 5723; i++)
+			for (int i = 0; i < mashupNumbers; i++)
 			{
-				for (int j = 0; j < 5723; j++)
+				for (int j = 0; j < mashupNumbers; j++)
 					fileWriter.write(mashupMatrix[i][j] + ",");
 				fileWriter.write("\r\n");
 			}
@@ -141,50 +135,54 @@ public class RelationController
 			e.printStackTrace();
 		}
 		
+		
+		
 	}
 	
+	@RequestMapping("/mashup")
+	public void mashup()
+	{
+		// 去除ApiID为-1的无效数据
+		relationMapper.delete();
+		
+		List<Integer> mashupIDs = relationMapper.selectAllMashupID();
+		
+		for(int i = 0; i < mashupIDs.size(); i++)
+		{
+			Set<Integer> mashupI = new HashSet<Integer>(relationMapper.selectByMashupID(mashupIDs.get(i)));
+			
+			for (int j = 1; j < mashupIDs.size(); j++)
+			{
+				Set<Integer> mashupJ = new HashSet<Integer>(relationMapper.selectByMashupID(mashupIDs.get(j)));
+				
+				Set<Integer> intersection = new HashSet<Integer>();
+				intersection.clear();
+				intersection.addAll(mashupI);
+				intersection.retainAll(mashupJ);
+				if (intersection.size() == 0)
+					continue;
+				List<Integer> intersections = new ArrayList<Integer>(intersection); 
+				
+				Set<Integer> union = new HashSet<Integer>();
+				union.clear();
+				union.addAll(mashupI);
+				union.addAll(mashupJ);
+				List<Integer> unions = new ArrayList<Integer>(union);
+				
+				double weight = (double)intersection.size() / union.size();
+				relationMapper.insertMashupRelation(new MashupRelation(	mashupIDs.get(i),
+																		mashupIDs.get(j),
+																		RelationController.translate(intersections),
+																		RelationController.translate(unions),
+																		weight
+																		));
+			}
+		}
+	}
 	
 	@RequestMapping("/hello")
 	public ModelAndView handleRequest(HttpServletRequest arg0, HttpServletResponse arg1) throws Exception
 	{
-		// 去除无效数据
-		relationMapper.delete();
-		
-		List<Integer> apiIDs = relationMapper.selectAllApiID();
-
-		for(int apiID : apiIDs)
-		{
-			List<Integer> mashupIDs = relationMapper.selectByApiID(apiID);
-			
-			if (1 < mashupIDs.size())
-			{
-				MashupRelation mashupRelation = null;
-				mashupIDs.sort(null);
-				//System.out.println(mashupIDs.toString());
-				for(int i = 0; i < mashupIDs.size(); i++)
-					for(int j = i + 1; j < mashupIDs.size(); j++)
-					{ 
-						//System.out.println(i + " " + j + " " + mashupIDs.get(i) + ", " + mashupIDs.get(j));
-						mashupRelation = relationMapper.selectByTwoMashupIDs(mashupIDs.get(i), mashupIDs.get(j));
-						if (null != mashupRelation)
-						{
-							mashupRelation.setIntersection(mashupRelation.getIntersection()+ "," + apiID);
-							mashupRelation.setUnion(mashupRelation.getUnion() + "," + apiID);
-							// TODO Weight
-							relationMapper.updateMashupRelation(mashupRelation);
-						}
-						else
-						{
-							mashupRelation = new MashupRelation(mashupIDs.get(i), mashupIDs.get(j), apiID + "", apiID + "", 0);
-							relationMapper.insertMashupRelation(mashupRelation);
-						}
-						mashupRelation = null;
-					}
-			}
-		}
-		
-		// 去重
-
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("msg", "complete");
 		modelAndView.setViewName("Hello");
