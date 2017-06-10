@@ -22,22 +22,14 @@ public class Relation
 		this.apiID = apiID;
 	}
 	
+	public Relation()
+	{
+		super();
+	}
 	public Relation(int mashupID, int apiID)
 	{
 		super();
 		this.mashupID = mashupID;
 		this.apiID = apiID;
 	}
-	
-	public Relation()
-	{
-		super();
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "Relation [mashupID=" + mashupID + ", apiID=" + apiID + "]";
-	}
-	
 }

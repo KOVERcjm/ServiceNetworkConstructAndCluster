@@ -3,20 +3,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mybatis.mapper.RelationMapper">
-	
-	<!-- 去除无效数据 -->
+	<!-- 去除ApiID为-1的无效数据 -->
 	<delete id="delete">
 		delete from mashupapi where ApiID='-1'
 	</delete>
-	
-	<!-- 获取完整ApiID列表 -->
-	<select id="selectAllApiID" resultType="int">
-        select distinct ApiID from mashupapi order by ApiID
-    </select>
     
     <!-- 获取MashupID数量 -->
 	<select id="countMashups" resultType="int">
         select count(distinct MashupID) from mashupapi
+    </select>
+    
+    <!-- 获取MashupRelation数量 -->
+	<select id="countMashupRelations" resultType="int">
+        select count(*) from mashuprelation
     </select>
     
     <!-- 获取完整MashupID列表 -->
@@ -24,39 +23,34 @@
         select distinct MashupID from mashupapi order by MashupID
     </select>
     
-    <!-- 获取完整Relation列表 -->
-	<select id="selectAllRelation" resultType="Relation">
-        select MashupID mashupID, ApiID apiID from mashupapi limit 0,20
-    </select>
-    
-    <!-- 获取完整MashupRelation列表 -->
+    <!-- 获取MashupRelation列表（每次取1000条） -->
 	<select id="selectMashupRelations" resultType="MashupRelation">
         select MashupID_A mashupID_A, MashupID_B mashupID_B, Intersections intersections, Unions unions, Weight weight from mashupRelation limit #{start}, 1000
     </select>
 	
-	<!-- 根据ApiID获取MashupID列表 -->
-	<select id="selectByApiID" parameterType="int" resultType="int">
-        select MashupID from mashupapi where ApiID = #{apiID}
-    </select>
-	
-	<!-- 根据MashupID获取ApiID列表 -->
+	<!-- 根据MashupID获取对应的ApiID列表 -->
     <select id="selectByMashupID" parameterType="int" resultType="int">
         select ApiID from mashupapi where MashupID = #{mashupID}
     </select>
     
-    <!-- 根据MashupID_A和MashupID_B获取MashupRelation列表 -->
-    <select id="selectByTwoMashupIDs" resultType="MashupRelation">
-        select MashupID_A mashupID_A, MashupID_B mashupID_B, Intersections intersections, Unions unions, Weight weight from mashup_api where MashupID_A = #{a} and MashupID_B = #{b}
-    </select>
-    
-    <!-- 插入MashupRelation -->
+    <!-- 插入单个MashupRelation -->
     <insert id="insertMashupRelation" parameterType="MashupRelation">
     	insert into mashupRelation(MashupID_A,MashupID_B,Intersections,Unions,Weight) values (#{mashupID_A},#{mashupID_B},#{intersections},#{unions},#{weight})
     </insert>
     
-    <!-- 更新MashupRelation -->
-    <update id="updateMashupRelation" parameterType="MashupRelation">
-    	update mashup_api set Intersections = #{intersections}, Unions = #{union}, Weight = #{weight} where MashupID_A = #{mashupID_A} and MashupID_B = #{mashupID_B}
-    </update>
     
+    <!-- 获取Mashup列表 -->
+    <select id="getMashup" resultType="Description">
+        select ID as id, Name as name, Description as description from mashup
+    </select>
+    
+    <!-- 获取API列表 -->
+    <select id="getAPI" resultType="Description">
+        select ID as id, Name as name, Description as description from apibasic
+    </select>
+    
+    <!-- 获取带描述的Mashup-API关系表 -->
+    <select id="getRelationDescription" resultType="RelationDescription">
+        select mashup.ID as mashupID, mashup.Name as mashupName, apibasic.ID as apiID, apibasic.Name as apiName from mashup,apibasic,mashupapi where mashupapi.MashupID = mashup.ID and mashupapi.ApiID = apibasic.ID
+    </select>
 </mapper>

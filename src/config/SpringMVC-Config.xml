@@ -21,5 +21,4 @@
 	
 	<!-- 配置注解扫描器 -->
 	<context:component-scan base-package="controller"/>
-	
 </beans>

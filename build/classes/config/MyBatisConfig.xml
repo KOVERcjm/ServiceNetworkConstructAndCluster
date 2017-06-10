@@ -7,6 +7,8 @@
     <typeAliases> 
         <typeAlias alias="Relation" type="mybatis.model.Relation"/>
         <typeAlias alias="MashupRelation" type="mybatis.model.MashupRelation"/>
+        <typeAlias alias="Description" type="mybatis.model.Description"/>
+        <typeAlias alias="RelationDescription" type="mybatis.model.RelationDescription"/>
     </typeAliases>
 
 </configuration>

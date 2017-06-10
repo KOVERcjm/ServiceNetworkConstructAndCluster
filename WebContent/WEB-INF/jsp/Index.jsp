@@ -28,11 +28,12 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
+            <li><a href="prepareData.do">数据准备</a></li>
             <li class="active"><a href="#">项目概況</a></li>
-            <li><a href="navigate.do?page=DataVisualization">服务数据集</a></li>
+            <li><a href="navigate.do?page=DataVisualization">服务数据集管理</a></li>
             <li><a href="navigate.do?page=NetworkConstruct">服务复杂网络构建</a></li>
-            <li><a href="#">服务聚类</a></li>
-            <li><a href="#">实验结果</a></li>
+            <li><a href="navigate.do?page=Cluster">服务聚类</a></li>
+            <li><a href="navigate.do?page=Result">聚类可视化</a></li>
           </ul>
         </div>
       </div>
@@ -54,11 +55,14 @@
           <ul class="nav nav-pills nav-stacked" data-spy="affix">
             <li><a href="#Overview">综述</a></li>
             <li><a href="#DataSource">实验数据源</a></li>
-            <li><a href="#UsedTechnology">使用技术</a></li>
           </ul>
         </div>
         <div class="col-md-10 panel">
+        	<hr>
+        	<hr>
         	<h3 id="Overview" class="target">综述</h3>
+        	<hr>
+        	<hr>
         	<p>课题来源：国家自然科学基金项目</p>
 			<p>
 			课题意义与主要内容：目前，Web服务已得到工业界和学术界的广泛关注。
@@ -68,17 +72,16 @@
 			本题目拟利用聚类算法挖掘Restful服务间的相互调用关系，并验证其有效性。
         	</p>
         	<hr>
+        	<hr>
         	<h3 id="DataSource" class="target">实验数据源</h3>
+        	<hr>
+        	<hr>
         	<p>
         	实验所用数据集爬取自API通用资源网站ProgrammableWeb(ProgrammableWeb.com)，
-        	涵盖了网站上API、Mashup、Category几乎所有条目，包含Mashup 6254个，Api 13869个，
-        	Mashup与Api对应数据条目13105条（有效数据11005条），本课题主要使用了其中Mashup与
-        	Api对应数据表。
+        	涵盖了网站上API、Mashup、Category几乎所有条目，包含Mashup 6254 个，API 13869 个，
+        	Mashup与API对应数据条目13105条（有效数据11005条），本课题主要使用了其中Mashup与
+        	API对应数据表。
         	</p>
-        	<hr>
-        	<h3 id="UsedTechnology" class="target">使用技术</h3>
-        	<p>网络构建：	</p>
-        	<p>聚类算法：	</p>
         </div>
       </div>
     </div>

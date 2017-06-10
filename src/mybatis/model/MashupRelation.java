@@ -48,6 +48,7 @@ public class MashupRelation
 	{
 		this.weight = weight;
 	}
+	
 	public MashupRelation()
 	{
 		super();
@@ -59,13 +60,6 @@ public class MashupRelation
 		this.mashupID_B = mashupID_B;
 		this.intersections = intersection;
 		this.unions = union;
-		this.weight = weight; //TODO weight
+		this.weight = weight;
 	}
-	@Override
-	public String toString()
-	{
-		return "MashupRelation [mashupID_A=" + mashupID_A + ", mashupID_B=" + mashupID_B + ", intersection=" + intersections + ", union=" + unions + ", weight=" + weight + "]";
-	}
-	
-	
 }
